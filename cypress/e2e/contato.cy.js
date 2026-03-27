@@ -1,0 +1,56 @@
+describe("Funcionalidade: Contato", () => {
+
+  beforeEach(() => {
+    cy.visit('http://localhost:3000/index.html') 
+  });
+
+  it("Deve preencher formulário de contato com sucesso", () => {
+    cy.get('[name="name"]').type("Diego Costa")
+    cy.get('[name="email"]').type("diego@teste.com")
+    cy.get('[name="subject"]').select("Sugestões")
+    cy.get('[name="message"]').type("Mensagem de teste")
+    cy.get('#btn-submit').click()
+    //Resultado esperado
+    cy.contains("Contato enviado com sucesso!").should("exist")
+  });
+
+  it('Deve validar a mensagem de erro ao enviar sem preencher nome', () => {
+    cy.get('[name="name"]').clear()
+    cy.get('[name="email"]').type("diego@teste.com")
+    cy.get('[name="subject"]').select("Sugestões")
+    cy.get('[name="message"]').type("Mensagem de teste")
+    cy.get('#btn-submit').click()
+    //Resultado esperado
+    cy.get('#alert-container').should("contain", "Por favor, preencha o campo Nome")
+  });
+
+  it('Deve validar a mensagem de erro ao enviar sem preencher e-mail', () => {
+    cy.get('[name="name"]').type("Diego Costa")
+    cy.get('[name="email"]').clear()
+    cy.get('[name="subject"]').select("Sugestões")
+    cy.get('[name="message"]').type("Mensagem de teste")
+    cy.get('#btn-submit').click()
+    //Resultado esperado
+    cy.get('#alert-container').should("contain", "Por favor, preencha o campo E-mail")
+  });
+
+  it('Deve validar a mensagem de erro ao enviar sem preencher o assunto', () => {
+    cy.get('[name="name"]').type("Diego Costa")
+    cy.get('[name="email"]').type("diego@teste.com")
+    //cy.get('[name="subject"]').select("Sugestões")
+    cy.get('[name="message"]').type("Mensagem de teste")
+    cy.get('#btn-submit').click()
+    //Resultado esperado
+    cy.get('#alert-container').should("contain", "Por favor, selecione o Assunto")
+  });
+
+  it('Deve validar a mensagem de erro ao enviar sem preencher a mensagem', () => { 
+    cy.get('[name="name"]').type("Diego Costa")
+    cy.get('[name="email"]').type("diego@teste.com")
+    cy.get('[name="subject"]').select("Sugestões")
+    cy.get('[name="message"]').clear()
+    cy.get('#btn-submit').click()
+    //Resultado esperado
+    cy.get('#alert-container').should("contain", "Por favor, escreva sua Mensagem")
+  });
+});
