@@ -21,7 +21,7 @@ describe("Funcionalidade: Contato", () => {
     cy.get('[name="email"]').type("diego@teste.com")
     cy.get('[name="subject"]').select("Sugestões")
     cy.get('[name="message"]').type("Mensagem de teste")
-    cy.get('#btn-submit').click()
+    cy.get('#btn-submit').click() 
     //Resultado esperado
     cy.get('#alert-container').should("contain", "Por favor, preencha o campo Nome")
   });

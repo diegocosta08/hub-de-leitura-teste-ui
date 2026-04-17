@@ -12,7 +12,6 @@ describe('Funcionalidade: Login', () => {
         cy.get('#password').type('user123')
         cy.get('#login-btn').click()
         cy.url().should('include', 'dashboard')
-
     });
 
     it('Deve fazer login com sucesso - Usando comando customizado', () => {
